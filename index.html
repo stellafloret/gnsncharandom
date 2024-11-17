@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キャラクターダイス</title>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <h1>キャラクターダイス</h1>
+
+  <!-- 絞り込みフォーム -->
+  <section id="filters">
+    <h2>絞り込み</h2>
+
+    <div>
+      <h3>地域:</h3>
+      <label><input type="checkbox" name="region" value="モンド"> モンド</label>
+      <label><input type="checkbox" name="region" value="璃月"> 璃月</label>
+      <label><input type="checkbox" name="region" value="なし"> なし</label>
+    </div>
+
+    <div>
+      <h3>武器:</h3>
+      <label><input type="checkbox" name="weapon" value="片手剣"> 片手剣</label>
+      <label><input type="checkbox" name="weapon" value="両手剣"> 両手剣</label>
+      <label><input type="checkbox" name="weapon" value="弓"> 弓</label>
+      <label><input type="checkbox" name="weapon" value="法器"> 法器</label>
+    </div>
+
+    <div>
+      <h3>元素:</h3>
+      <label><input type="checkbox" name="element" value="風"> 風</label>
+      <label><input type="checkbox" name="element" value="炎"> 炎</label>
+      <label><input type="checkbox" name="element" value="水"> 水</label>
+      <label><input type="checkbox" name="element" value="雷"> 雷</label>
+      <label><input type="checkbox" name="element" value="氷"> 氷</label>
+      <label><input type="checkbox" name="element" value="不定"> 不定</label>
+    </div>
+
+    <button id="filterButton">絞り込む</button>
+  </section>
+
+  <!-- 絞り込み結果 -->
+  <section id="resultSection">
+    <h2>絞り込み結果</h2>
+    <ul id="filteredCharacters"></ul>
+    <button id="rollButton" disabled>サイコロを振る</button>
+    <p id="diceResult">選ばれたキャラクター: <span id="selectedCharacter">---</span></p>
+  </section>
+</body>
+</html>
