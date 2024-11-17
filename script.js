@@ -35,10 +35,10 @@ function updateFilteredCharacters() {
   const filteredCharacters = characters.filter(character => {
     return (
       (selectedRegions.length === 0 || selectedRegions.includes(character.地域)) &&
-      (selectedRegions.length === 0 || selectedGenders.includes(character.性別)) &&
+      (selectedGenders.length === 0 || selectedGenders.includes(character.性別)) &&
       (selectedWeapons.length === 0 || selectedWeapons.includes(character.武器)) &&
       (selectedElements.length === 0 || selectedElements.includes(character.元素)) &&
-      (selectedRegions.length === 0 || selectedBirthdays.includes(character.誕生月)) &&
+      (selectedBirthdays.length === 0 || selectedBirthdays.includes(character.誕生月)) &&
       (!excludeHistoryChecked || !history.includes(character.名前)) // 履歴にあるキャラクターを除外
     );
   });
