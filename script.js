@@ -22,7 +22,8 @@ document.getElementById('filterButton').addEventListener('click', () => {
       (selectedRegions.length === 0 || selectedRegions.includes(character.地域)) &&
       (selectedWeapons.length === 0 || selectedWeapons.includes(character.武器)) &&
       (selectedElements.length === 0 || selectedElements.includes(character.元素)) &&
-      !excludedCharacters.includes(character.名前)
+      !excludedCharacters.includes(character.名前) &&  // 除外キャラクターをフィルタリング
+      !history.includes(character.名前)  // 履歴に追加されたキャラクターを除外
     );
   });
 
@@ -47,6 +48,7 @@ document.getElementById('rollButton').addEventListener('click', () => {
 document.getElementById('clearHistoryButton').addEventListener('click', () => {
   history = [];
   updateHistoryDisplay();
+  updateFilteredCharacters(); // 履歴を消去後、絞り込み結果を再表示
 });
 
 // チェックボックスで選択された値を取得
@@ -57,8 +59,7 @@ function getCheckedValues(groupName) {
 
 // 履歴に基づく除外キャラクターを取得
 function getExcludedCharacters() {
-  const checkboxes = document.querySelectorAll('#history input:checked');
-  return Array.from(checkboxes).map(checkbox => checkbox.value);
+  return history; // 除外キャラクターは履歴に基づく
 }
 
 // 絞り込んだキャラクターを表示
@@ -80,6 +81,7 @@ function addToHistory(characterName) {
   if (!history.includes(characterName)) {
     history.push(characterName);
     updateHistoryDisplay();
+    updateFilteredCharacters(); // 履歴に追加されたキャラクターを絞り込み結果に反映
   }
 }
 
@@ -87,14 +89,20 @@ function addToHistory(characterName) {
 function updateHistoryDisplay() {
   const historyList = document.getElementById('history');
   historyList.innerHTML = '';
+
   history.forEach(character => {
     const listItem = document.createElement('li');
-    listItem.innerHTML = `
-      <label>
-        <input type="checkbox" value="${character}"> 除外する
-        ${character}
-      </label>
-    `;
+    listItem.textContent = character;
     historyList.appendChild(listItem);
   });
 }
+
+// 履歴から全てのキャラクターを除外
+document.getElementById('excludeAllButton').addEventListener('click', () => {
+  // 履歴にある全てのキャラクターを除外
+  const excludeAllCharacters = history.slice(); // 履歴をコピー
+  characters = characters.filter(character => !excludeAllCharacters.includes(character.名前));
+  history = []; // 履歴をクリア
+  updateHistoryDisplay();
+  updateFilteredCharacters(); // 絞り込み結果を再表示
+});
