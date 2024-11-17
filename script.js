@@ -38,7 +38,7 @@ function updateFilteredCharacters() {
       (selectedGenders.length === 0 || selectedGenders.includes(character.性別)) &&
       (selectedWeapons.length === 0 || selectedWeapons.includes(character.武器)) &&
       (selectedElements.length === 0 || selectedElements.includes(character.元素)) &&
-      (selectedBirthdays.length === 0 || selectedBirthdays.includes(character.誕生月)) &&
+      (selectedBirthdays.length === 0 || selectedBirthdays.includes(character.誕生日)) &&
       (!excludeHistoryChecked || !history.includes(character.名前)) // 履歴にあるキャラクターを除外
     );
   });
