@@ -5,62 +5,35 @@ fetch('characters.json')
   .then(data => {
     characters = data;
     updateHistoryDisplay(); // 履歴を更新
+    updateFilteredCharacters(); // 初回の絞り込み表示
   })
   .catch(error => console.error('データ読み込みエラー:', error));
 
 let history = []; // 履歴を保存する配列
 
-// 絞り込みボタンのクリックイベント
-document.getElementById('filterButton').addEventListener('click', () => {
+// フィルタリング関数
+function updateFilteredCharacters() {
   const selectedRegions = getCheckedValues('region');
   const selectedWeapons = getCheckedValues('weapon');
   const selectedElements = getCheckedValues('element');
-  const excludedCharacters = getExcludedCharacters();
-
+  const excludeHistoryChecked = document.getElementById('excludeHistory').checked;
+  
   const filteredCharacters = characters.filter(character => {
     return (
       (selectedRegions.length === 0 || selectedRegions.includes(character.地域)) &&
       (selectedWeapons.length === 0 || selectedWeapons.includes(character.武器)) &&
       (selectedElements.length === 0 || selectedElements.includes(character.元素)) &&
-      !excludedCharacters.includes(character.名前) &&  // 除外キャラクターをフィルタリング
-      !history.includes(character.名前)  // 履歴に追加されたキャラクターを除外
+      (!excludeHistoryChecked || !history.includes(character.名前)) // 履歴にあるキャラクターを除外
     );
   });
 
   displayFilteredCharacters(filteredCharacters);
-});
-
-// サイコロボタンのクリックイベント
-document.getElementById('rollButton').addEventListener('click', () => {
-  const filteredCharacters = document.querySelectorAll('#filteredCharacters li');
-  if (filteredCharacters.length > 0) {
-    const randomIndex = Math.floor(Math.random() * filteredCharacters.length);
-    const randomCharacter = filteredCharacters[randomIndex].textContent;
-
-    document.getElementById('selectedCharacter').textContent = randomCharacter;
-
-    // 履歴に追加
-    addToHistory(randomCharacter);
-  }
-});
-
-// 履歴消去ボタンのクリックイベント
-document.getElementById('clearHistoryButton').addEventListener('click', () => {
-  history = [];
-  updateHistoryDisplay();
-  updateFilteredCharacters(); // 履歴を消去後、絞り込み結果を再表示
-});
-
-// チェックボックスで選択された値を取得
-function getCheckedValues(groupName) {
-  const checkboxes = document.querySelectorAll(`input[name="${groupName}"]:checked`);
-  return Array.from(checkboxes).map(checkbox => checkbox.value);
 }
 
-// 履歴に基づく除外キャラクターを取得
-function getExcludedCharacters() {
-  return history; // 除外キャラクターは履歴に基づく
-}
+// チェックボックスの変更時にフィルタリングを実行
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+  checkbox.addEventListener('change', updateFilteredCharacters);
+});
 
 // 絞り込んだキャラクターを表示
 function displayFilteredCharacters(filteredCharacters) {
@@ -75,6 +48,20 @@ function displayFilteredCharacters(filteredCharacters) {
   // サイコロボタンの有効/無効を切り替える
   document.getElementById('rollButton').disabled = filteredCharacters.length === 0;
 }
+
+// サイコロボタンのクリックイベント
+document.getElementById('rollButton').addEventListener('click', () => {
+  const filteredCharacters = document.querySelectorAll('#filteredCharacters li');
+  if (filteredCharacters.length > 0) {
+    const randomIndex = Math.floor(Math.random() * filteredCharacters.length);
+    const randomCharacter = filteredCharacters[randomIndex].textContent;
+
+    document.getElementById('selectedCharacter').textContent = randomCharacter;
+
+    // 履歴に追加
+    addToHistory(randomCharacter);
+  }
+});
 
 // 履歴にキャラクターを追加
 function addToHistory(characterName) {
@@ -97,27 +84,27 @@ function updateHistoryDisplay() {
   });
 }
 
-// 履歴にある全キャラクターを除外するチェックボックス
-document.getElementById('excludeAllCheckbox').addEventListener('change', () => {
-  const excludeAll = document.getElementById('excludeAllCheckbox').checked;
-  if (excludeAll) {
-    // 履歴にある全てのキャラクターを除外
-    characters = characters.filter(character => !history.includes(character.名前));
-  } else {
-    // 除外を解除した場合、元のデータに戻す（簡単のため、履歴をリセットする）
-    fetch('characters.json')
-      .then(response => response.json())
-      .then(data => {
-        characters = data;
-        updateFilteredCharacters(); // 絞り込み結果を再表示
-      })
-      .catch(error => console.error('データ読み込みエラー:', error));
-  }
-});
-
-// 履歴をリセット
-document.getElementById('resetHistoryButton').addEventListener('click', () => {
+// 履歴消去ボタンのクリックイベント
+document.getElementById('clearHistoryButton').addEventListener('click', () => {
   history = [];
   updateHistoryDisplay();
-  updateFilteredCharacters(); // 履歴リセット後、絞り込み結果を再表示
+  updateFilteredCharacters(); // 履歴消去後に絞り込み結果を更新
+});
+
+// チェックボックスで選択された値を取得
+function getCheckedValues(groupName) {
+  const checkboxes = document.querySelectorAll(`input[name="${groupName}"]:checked`);
+  return Array.from(checkboxes).map(checkbox => checkbox.value);
+}
+
+// データ読み込みエラー処理
+function handleError(error) {
+  console.error('データ読み込みエラー:', error);
+}
+
+// 履歴リセットのイベントリスナー
+document.getElementById('resetHistoryButton')?.addEventListener('click', () => {
+  history = [];
+  updateHistoryDisplay();
+  updateFilteredCharacters();
 });
