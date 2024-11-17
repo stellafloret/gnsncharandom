@@ -14,15 +14,19 @@ let history = []; // 履歴を保存する配列
 // フィルタリング関数
 function updateFilteredCharacters() {
   const selectedRegions = getCheckedValues('region');
+  const selectedWeapons = getCheckedValues('gender');
   const selectedWeapons = getCheckedValues('weapon');
   const selectedElements = getCheckedValues('element');
+  const selectedWeapons = getCheckedValues('birthday');
   const excludeHistoryChecked = document.getElementById('excludeHistory').checked;
   
   const filteredCharacters = characters.filter(character => {
     return (
       (selectedRegions.length === 0 || selectedRegions.includes(character.地域)) &&
+      (selectedRegions.length === 0 || selectedRegions.includes(character.性別)) &&
       (selectedWeapons.length === 0 || selectedWeapons.includes(character.武器)) &&
       (selectedElements.length === 0 || selectedElements.includes(character.元素)) &&
+      (selectedRegions.length === 0 || selectedRegions.includes(character.誕生月)) &&
       (!excludeHistoryChecked || !history.includes(character.名前)) // 履歴にあるキャラクターを除外
     );
   });
