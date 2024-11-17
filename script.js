@@ -97,12 +97,27 @@ function updateHistoryDisplay() {
   });
 }
 
-// 履歴から全てのキャラクターを除外
-document.getElementById('excludeAllButton').addEventListener('click', () => {
-  // 履歴にある全てのキャラクターを除外
-  const excludeAllCharacters = history.slice(); // 履歴をコピー
-  characters = characters.filter(character => !excludeAllCharacters.includes(character.名前));
-  history = []; // 履歴をクリア
+// 履歴にある全キャラクターを除外するチェックボックス
+document.getElementById('excludeAllCheckbox').addEventListener('change', () => {
+  const excludeAll = document.getElementById('excludeAllCheckbox').checked;
+  if (excludeAll) {
+    // 履歴にある全てのキャラクターを除外
+    characters = characters.filter(character => !history.includes(character.名前));
+  } else {
+    // 除外を解除した場合、元のデータに戻す（簡単のため、履歴をリセットする）
+    fetch('characters.json')
+      .then(response => response.json())
+      .then(data => {
+        characters = data;
+        updateFilteredCharacters(); // 絞り込み結果を再表示
+      })
+      .catch(error => console.error('データ読み込みエラー:', error));
+  }
+});
+
+// 履歴をリセット
+document.getElementById('resetHistoryButton').addEventListener('click', () => {
+  history = [];
   updateHistoryDisplay();
-  updateFilteredCharacters(); // 絞り込み結果を再表示
+  updateFilteredCharacters(); // 履歴リセット後、絞り込み結果を再表示
 });
