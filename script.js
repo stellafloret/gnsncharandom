@@ -1,8 +1,20 @@
 // キャラクターデータを読み込む
 let characters = [];
 fetch('characters.json')
-  .then(response => response.json())
+  .then(response => {
+    // デバッグ用: HTTPステータスコードの確認
+    console.log(`HTTPステータス: ${response.status}`);
+
+    // レスポンスが正常か確認
+    if (!response.ok) {
+      throw new Error(`HTTPエラー: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
+    // デバッグ用: 読み込まれたデータの確認
+    console.log('データ読み込み成功:', data);
+
     characters = data;
     updateHistoryDisplay(); // 履歴を更新
     updateFilteredCharacters(); // 初回の絞り込み表示
