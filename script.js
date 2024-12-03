@@ -100,13 +100,6 @@ function updateHistoryDisplay() {
   });
 }
 
-// 履歴消去ボタンのクリックイベント
-document.getElementById('clearHistoryButton').addEventListener('click', () => {
-  history = [];
-  updateHistoryDisplay();
-  updateFilteredCharacters(); // 履歴消去後に絞り込み結果を更新
-});
-
 // チェックボックスで選択された値を取得
 function getCheckedValues(groupName) {
   const checkboxes = document.querySelectorAll(`input[name="${groupName}"]:checked`);
