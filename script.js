@@ -79,6 +79,13 @@ document.getElementById('rollButton').addEventListener('click', () => {
   }
 });
 
+// 「履歴を消去」ボタンのクリックイベント
+document.getElementById('clearHistoryButton').addEventListener('click', () => {
+  history = []; // 履歴を空にする
+  updateHistoryDisplay(); // 履歴表示を更新
+  updateFilteredCharacters(); // 絞り込み結果を更新
+});
+
 // 履歴にキャラクターを追加
 function addToHistory(characterName) {
   if (!history.includes(characterName)) {
