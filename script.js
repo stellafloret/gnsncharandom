@@ -111,9 +111,4 @@ function handleError(error) {
   console.error('データ読み込みエラー:', error);
 }
 
-// 履歴リセットのイベントリスナー
-document.getElementById('resetHistoryButton')?.addEventListener('click', () => {
-  history = [];
-  updateHistoryDisplay();
-  updateFilteredCharacters();
-});
+
