@@ -79,6 +79,20 @@ document.getElementById('rollButton').addEventListener('click', () => {
   }
 });
 
+// 折りたたみ機能の実装
+document.querySelectorAll('.toggle-button').forEach(button => {
+  button.addEventListener('click', () => {
+    const targetSelector = button.getAttribute('data-target');
+    const targetElement = document.querySelector(targetSelector);
+    
+    // 折りたたみの切り替え
+    if (targetElement) {
+      targetElement.classList.toggle('collapsed-content'); // 折りたたみの切り替え
+      button.parentElement.classList.toggle('collapsed'); // 見た目を▲に変更
+    }
+  });
+});
+
 // 「履歴を消去」ボタンのクリックイベント
 document.getElementById('clearHistoryButton').addEventListener('click', () => {
   history = []; // 履歴を空にする
