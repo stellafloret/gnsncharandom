@@ -86,9 +86,12 @@ document.querySelectorAll('.toggle-button').forEach(button => {
     const targetElement = document.querySelector(targetSelector);
     
     // 折りたたみの切り替え
-    if (targetElement) {
-      targetElement.classList.toggle('collapsed-content'); // 折りたたみの切り替え
-      button.parentElement.classList.toggle('collapsed'); // 見た目を▲に変更
+     if (targetElement) {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !isExpanded);
+      button.innerText = isExpanded ? '展開する' : '折りたたむ'; 
+      targetElement.classList.toggle('collapsed-content');
+
     }
   });
 });
