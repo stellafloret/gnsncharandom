@@ -13,14 +13,6 @@
       cursor: pointer;
     }
 
-    .toggle-button:after {
-      content: "▼";
-    }
-
-    .collapsed .toggle-button:after {
-      content: "▲";
-    }
-
     .collapsed-content {
       display: none;
     }
@@ -32,8 +24,10 @@
 
   <!-- 絞り込みフォーム -->
   <section id="filters">
-    <h2>絞り込み <button class="toggle-button" data-target="#filters-content">▼</button></h2>
-    <div id="filters-content">
+    <h2>絞り込み 
+      <button class="toggle-button" data-target="#filters-content" aria-expanded="false">展開する</button>
+    </h2>
+    <div id="filters-content" class="collapsed-content">
       <div>
         <h3>地域:</h3>
         <label><input type="checkbox" name="region" value="モンド"> モンド</label>
@@ -44,16 +38,14 @@
         <label><input type="checkbox" name="region" value="ナタ"> ナタ</label>
         <label><input type="checkbox" name="region" value="ファデュイ"> ファデュイ</label>
       </div>
-
       <div>
-        <h3>性別:</h3>
+        <h3>キャラモデル:</h3>
         <label><input type="checkbox" name="gender" value="高身長男性"> 高身長男性</label>
         <label><input type="checkbox" name="gender" value="中身長男性"> 中身長男性</label>
         <label><input type="checkbox" name="gender" value="高身長女性"> 高身長女性</label>
         <label><input type="checkbox" name="gender" value="中身長女性"> 中身長女性</label>
         <label><input type="checkbox" name="gender" value="低身長女性"> 低身長女性</label>
       </div>
-
       <div>
         <h3>武器:</h3>
         <label><input type="checkbox" name="weapon" value="片手剣"> 片手剣</label>
@@ -62,40 +54,59 @@
         <label><input type="checkbox" name="weapon" value="槍"> 槍</label>
         <label><input type="checkbox" name="weapon" value="法器"> 法器</label>
       </div>
-
       <div>
         <h3>元素:</h3>
-        <label><input type="checkbox" name="element" value="風"> 風</label>
-        <label><input type="checkbox" name="element" value="岩"> 岩</label>
+        <label><input type="checkbox" name="element" value="炎"> 炎</label>
+        <label><input type="checkbox" name="element" value="水"> 水</label>
+        <label><input type="checkbox" name="element" value="氷"> 氷</label>
         <label><input type="checkbox" name="element" value="雷"> 雷</label>
         <label><input type="checkbox" name="element" value="草"> 草</label>
-        <label><input type="checkbox" name="element" value="水"> 水</label>
-        <label><input type="checkbox" name="element" value="炎"> 炎</label>
-        <label><input type="checkbox" name="element" value="氷"> 氷</label>
+        <label><input type="checkbox" name="element" value="岩"> 岩</label>
+        <label><input type="checkbox" name="element" value="風"> 風</label>
+</div>
+
+
+      <div>
+        <h3>誕生日:</h3>
+        <label><input type="checkbox" name="birthday" value="1月"> 1月</label>
+        <label><input type="checkbox" name="birthday" value="2月"> 2月</label>
+        <label><input type="checkbox" name="birthday" value="3月"> 3月</label>
+        <label><input type="checkbox" name="birthday" value="4月"> 4月</label>
+        <label><input type="checkbox" name="birthday" value="5月"> 5月</label>
+        <label><input type="checkbox" name="birthday" value="6月"> 6月</label>
+        <label><input type="checkbox" name="birthday" value="7月"> 7月</label>
+        <label><input type="checkbox" name="birthday" value="8月"> 8月</label>
+        <label><input type="checkbox" name="birthday" value="9月"> 9月</label>
+        <label><input type="checkbox" name="birthday" value="10月"> 10月</label>
+        <label><input type="checkbox" name="birthday" value="11月"> 11月</label>
+        <label><input type="checkbox" name="birthday" value="12月"> 12月</label>
       </div>
     </div>
   </section>
 
   <!-- 絞り込み結果 -->
   <section id="resultSection">
-    <h2>絞り込み結果 <button class="toggle-button" data-target="#resultSection-content">▼</button></h2>
-    <div id="resultSection-content">
+    <h2>絞り込み結果 
+      <button class="toggle-button" data-target="#resultSection-content" aria-expanded="false">展開する</button>
+    </h2>
+    <div id="resultSection-content" class="collapsed-content">
       <ul id="filteredCharacters"></ul>
-      <label>
-        <input type="checkbox" id="excludeHistory"> 履歴にあるキャラクターを除外
-      </label>
-      <button id="rollButton" disabled>サイコロを振る</button>
-      <p id="diceResult">選ばれたキャラクター: <span id="selectedCharacter">---</span></p>
     </div>
+
+<label><input type="checkbox" id="excludeHistory"> 履歴にあるキャラクターを除外</label>
+
+    <button id="rollButton" type="button" disabled>サイコロを振る</button>
+    <p id="diceResult">選ばれたキャラクター: <span id="selectedCharacter">---</span></p>
   </section>
 
-  <!-- 履歴表示 -->
   <section id="historySection">
-    <h2>履歴 <button class="toggle-button" data-target="#historySection-content">▼</button></h2>
-    <div id="historySection-content">
+    <h2>履歴 
+      <button class="toggle-button" data-target="#historySection-content" aria-expanded="false">展開する</button>
+    </h2>
+    <div id="historySection-content" class="collapsed-content">
       <ul id="history"></ul>
-      <button id="clearHistoryButton">履歴を消去</button>
     </div>
+    <button id="clearHistoryButton" type="button">履歴を消去</button>
   </section>
 
 </body>
